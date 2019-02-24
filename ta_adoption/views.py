@@ -37,6 +37,11 @@ def outputs():
 
     return render_template('outputs.html', lastnames=pss_names, my_name='any')
 
+@application.route('/status')
+def status():
+    print('here i am')
+    return render_template('index.html')
+
 @application.route('/team', methods=['GET', 'POST'])
 def team():
     print("/team got a ",request.method,request.data)
