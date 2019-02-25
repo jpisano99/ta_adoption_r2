@@ -1,11 +1,10 @@
-from smartsheet_basic_functions import *
-import inspect
+from .smartsheet_basic_functions import *
+
 
 
 ss_config = dict(
-    SS_TOKEN=my_secrets.passwords["SS_TOKEN"]
-)
-
+    SS_TOKEN= ta_adoption.my_secrets.passwords["SS_TOKEN"]
+    )
 
 class Ssheet:
 

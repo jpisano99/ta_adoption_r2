@@ -1,21 +1,22 @@
-from settings import app
+from .settings import app
 import datetime
 import xlrd
-from open_wb import open_wb
-from push_list_to_xls import push_list_to_xls
-from create_customer_order_dict import create_customer_order_dict
-from get_linked_sheet_update import get_linked_sheet_update
-from build_sheet_map import build_sheet_map
-from sheet_map import sheet_map, sheet_keys
-from build_sku_dict import build_sku_dict
-from push_xls_to_ss import push_xls_to_ss
+from .open_wb import open_wb
+from .push_list_to_xls import push_list_to_xls
+from .create_customer_order_dict import create_customer_order_dict
+from .get_linked_sheet_update import get_linked_sheet_update
+from .build_sheet_map import build_sheet_map
+from .sheet_map import sheet_map, sheet_keys
+from .build_sku_dict import build_sku_dict
+from .push_xls_to_ss import push_xls_to_ss
 
 
-if __name__ == "__main__":
+def blanche():
+    from .sheet_map import sheet_map
     #
     # Open the order summary
     #
-    wb_orders, sheet_orders = open_wb('tmp_TA Scrubbed Orders_as_of_02_15_2019.xlsx')
+    wb_orders, sheet_orders = open_wb('tmp_TA Scrubbed Orders_as_of_02_24_2019.xlsx')
 
     # Loop over the orders XLS worksheet
     # Create a simple list of orders with NO headers
@@ -220,4 +221,5 @@ if __name__ == "__main__":
     #
     push_list_to_xls(new_rows, app['XLS_DASHBOARD'])
     # push_xls_to_ss(app['XLS_DASHBOARD']+'_as_of_01_31_2019.xlsx', 'jims dash')
-    exit()
+
+    return

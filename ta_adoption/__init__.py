@@ -2,7 +2,7 @@ import os
 from base64 import b64encode
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from ta_adoption.settings import database
+from .settings import database
 
 # Where am I ?
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -12,7 +12,7 @@ print(' In __init__.py File: ', __file__)
 print ("**************************")
 
 #Create the Flask App Object
-application =  app = Flask(__name__)
+application = app = Flask(__name__)
 
 #Assign App Config Variables
 token = os.urandom(64)

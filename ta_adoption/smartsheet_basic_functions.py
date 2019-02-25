@@ -1,5 +1,5 @@
 import smartsheet
-import my_secrets
+import ta_adoption.my_secrets
 import json
 
 def ss_get_sheet(ss, sheet_name):

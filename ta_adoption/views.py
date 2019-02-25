@@ -1,7 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from ta_adoption import application
 # from application import db
-from ta_adoption.models import *
+from .settings import app
+from .models import *
+from .my_functions import *
 
 
 @application.route('/')
@@ -37,10 +39,22 @@ def outputs():
 
     return render_template('outputs.html', lastnames=pss_names, my_name='any')
 
-@application.route('/status')
-def status():
+
+@application.route('/build_bookings')
+def build_bookings():
     print('here i am')
+    print(app['HOME'])
+    get_status()
     return render_template('index.html')
+
+
+@application.route('/build_dashboard')
+def build_dashboard():
+    print('here i am')
+    print(app['HOME'])
+    get_dashboard()
+    return render_template('index.html')
+
 
 @application.route('/team', methods=['GET', 'POST'])
 def team():
@@ -50,9 +64,8 @@ def team():
     print("url_for index ", url_for('index'))
     # Default is 20 results per page
     my_pages = Coverage.query.paginate(per_page=10)
-    print ("pages  ",my_pages.pages)
-    print (db.session.query(Coverage).count())
-
+    print("pages  ",my_pages.pages)
+    print(db.session.query(Coverage).count())
 
     print (request.get_data())
     if request.method == 'POST':
