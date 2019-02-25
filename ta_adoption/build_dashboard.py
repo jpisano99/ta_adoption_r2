@@ -100,7 +100,8 @@ def blanche():
         cx_contact = 'None assigned'
         cx_status = 'No Update'
         as_pm = ''
-        as_cse = ''
+        as_cse1 = ''
+        as_cse2 = ''
         as_complete = ''
         as_comments = ''
 

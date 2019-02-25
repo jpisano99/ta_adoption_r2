@@ -9,7 +9,7 @@ def push_list_to_xls(my_list, xls_file):
     #
     home = app['HOME']
     working_dir = app['WORKING_DIR']
-    path_to_files = home + '\\' + working_dir + '\\'
+    path_to_files = home + '/' + working_dir + '/'
     wb_file = path_to_files + xls_file + app['AS_OF_DATE'] + '.xlsx'
 
     #
