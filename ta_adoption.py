@@ -1,4 +1,5 @@
 from ta_adoption import application
+from ta_adoption.my_functions import build_update
 # from application import db
 # from flask_script import Manager, prompt_bool
 # from sqlalchemy_utils import create_database
@@ -10,4 +11,6 @@ if __name__ == "__main__":
     print ('In application.py Name: ',__name__)
     print (' In application.py File: ',__file__)
     print("**************************")
-    application.run(debug=False)
+    # application.run(debug=False)
+    build_update()
+

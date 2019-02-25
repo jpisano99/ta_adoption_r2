@@ -1,17 +1,20 @@
 import xlsxwriter
 import datetime
+import os
 from .settings import app
 
 
-def push_list_to_xls(my_list, xls_file):
+def push_list_to_xls(my_list, xls_file, xls_time=app['AS_OF_DATE']):
     #
     # Get settings for file locations and names
     #
     home = app['HOME']
     working_dir = app['WORKING_DIR']
-    path_to_files = home + '/' + working_dir + '/'
-    wb_file = path_to_files + xls_file + app['AS_OF_DATE'] + '.xlsx'
+    path_to_files = os.path.join(home, working_dir)
+    print(path_to_files)
 
+    wb_file = os.path.join(path_to_files, xls_file + xls_time + '.xlsx')
+    print(wb_file)
     #
     # Write the Excel File
     #
