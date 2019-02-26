@@ -16,7 +16,9 @@ def blanche():
     #
     # Open the order summary
     #
-    wb_orders, sheet_orders = open_wb('tmp_TA Scrubbed Orders_as_of_02_24_2019.xlsx')
+    wb_orders, sheet_orders = open_wb(app['XLS_ORDER_SUMMARY'])
+
+    # wb_orders, sheet_orders = open_wb('tmp_TA Scrubbed Orders_as_of ' + app['PROD_DATE'])
 
     # Loop over the orders XLS worksheet
     # Create a simple list of orders with NO headers

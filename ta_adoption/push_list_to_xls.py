@@ -4,7 +4,7 @@ import os
 from .settings import app
 
 
-def push_list_to_xls(my_list, xls_file, xls_time=app['AS_OF_DATE']):
+def push_list_to_xls(my_list, xls_file, xls_time=app['PROD_DATE']):
     #
     # Get settings for file locations and names
     #

@@ -1,5 +1,3 @@
-__author__ = 'jpisano'
-
 from datetime import datetime
 from ta_adoption.my_secrets import passwords
 import os
@@ -25,13 +23,14 @@ app = dict(
     WORKING_DIR='ta_adoption_data',
     UPDATES_DIR='ta_data_updates',
     ARCHIVES_DIR='archives',
-    XLS_RENEWALS='TA Renewal Dates as of 1-27-19.xlsx',
-    XLS_BOOKINGS='TA Master Bookings as of 2-14-19.xlsx',
-    XLS_CUSTOMER='tmp_TA Customer List',
-    XLS_ORDER_DETAIL='tmp_TA Order Details',
-    XLS_ORDER_SUMMARY='tmp_TA Scrubbed Orders',
-    XLS_BOOKINGS_TRASH='tmp Bookings Trash',
-    XLS_DASHBOARD='tmp_TA Unified Adoption Dashboard',
+    PROD_DATE='',
+    XLS_RENEWALS='',
+    XLS_BOOKINGS='',
+    XLS_CUSTOMER='',
+    XLS_ORDER_DETAIL='',
+    XLS_ORDER_SUMMARY='',
+    XLS_BOOKINGS_TRASH='',
+    XLS_DASHBOARD='tmp_TA Unified Adoption Dashboard ',
     SS_SAAS='SaaS customer tracking',
     SS_CX='Tetration Engaged Customer Report',
     SS_AS='Tetration Shipping Notification & Invoicing Status',
@@ -42,3 +41,19 @@ app = dict(
     SS_WORKSPACE='Tetration Customer Adoption Workspace',
     AS_OF_DATE=datetime.now().strftime('_as_of_%m_%d_%Y')
 )
+
+# Grab the production file date label
+# Add these filenames to the app settings dict
+path_to_main_dir = (os.path.join(app['HOME'], app['WORKING_DIR']))
+main_files = os.listdir(path_to_main_dir)
+prod_date = [file[-13:-13 + 8] for file in main_files if file.find('Master Bookings') != -1]
+
+app['PROD_DATE'] = prod_date[0]
+app['XLS_RENEWALS'] = 'TA Renewal Dates as of ' + app['PROD_DATE'] + '.xlsx'
+app['XLS_BOOKINGS'] = 'TA Master Bookings as of ' + app['PROD_DATE'] + '.xlsx'
+app['XLS_CUSTOMER'] = 'tmp_TA Customer List ' + app['PROD_DATE'] + '.xlsx'
+app['XLS_ORDER_DETAIL'] = 'tmp_TA Order Details ' + app['PROD_DATE'] + '.xlsx'
+app['XLS_ORDER_SUMMARY'] = 'tmp_TA Scrubbed Orders ' + app['PROD_DATE'] + '.xlsx'
+app['XLS_BOOKINGS_TRASH'] = 'tmp Bookings Trash ' + app['PROD_DATE'] + '.xlsx'
+# app['XLS_DASHBOARD'] = 'tmp_TA Unified Adoption Dashboard ' + app['PROD_DATE'] + '.xlsx'
+

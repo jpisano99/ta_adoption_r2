@@ -11,14 +11,13 @@ def open_wb(excel_file, dir_to_open='working'):
     working_dir = app['WORKING_DIR']
     path_to_files = ''
     if dir_to_open == 'working':
-        path_to_files = home + '/' + working_dir + '/'
+        path_to_files = os.path.join(home, working_dir)
     elif dir_to_open == 'updates':
         update_dir = app['UPDATES_DIR']
-        path_to_files = home + '/' + working_dir + '/' + update_dir + '/'
+        path_to_files = os.path.join(home,  working_dir, update_dir)
 
-    print(os.listdir(path_to_files))
-    path_to_file = path_to_files + excel_file
-    print('**************', path_to_file)
+    path_to_file = os.path.join(path_to_files, excel_file)
+    print('OPENING>>>>>>>>>> ', path_to_file)
 
     #
     # Open up excel workbook

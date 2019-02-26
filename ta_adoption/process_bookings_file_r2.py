@@ -219,7 +219,7 @@ def stan():
     #
     # Push our lists to an excel file
     #
-    push_list_to_xls(customer_platforms, 'jim')
+    push_list_to_xls(customer_platforms, 'jim ')
     push_list_to_xls(summary_order_rows, app['XLS_ORDER_SUMMARY'])
     push_list_to_xls(order_rows, app['XLS_ORDER_DETAIL'])
     push_list_to_xls(customer_list, app['XLS_CUSTOMER'])

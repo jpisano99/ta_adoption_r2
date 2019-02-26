@@ -11,6 +11,7 @@ def index():
     session['user'] = ''
     return render_template('index.html')
 
+
 @application.route('/test')
 def test():
     print ('hello')
@@ -45,6 +46,14 @@ def build_bookings():
     print('here i am')
     print(app['HOME'])
     get_status()
+    return render_template('index.html')
+
+
+@application.route('/refresh_data')
+def refresh_data():
+    print('refresh data')
+    print(app['HOME'])
+    get_fresh_data()
     return render_template('index.html')
 
 
