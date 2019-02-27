@@ -4,6 +4,7 @@ from .open_wb import open_wb
 from .process_bookings_file_r2 import stan
 from .build_dashboard import blanche
 from .push_list_to_xls import push_list_to_xls
+from .build_sku_dict import build_sku_dict
 import time
 import os
 
@@ -23,6 +24,13 @@ def get_dashboard():
 
 
 def get_fresh_data():
+    # This function retrieves data from the update_dir
+    # It looks for a file(s) in the format of:
+    #   'FY17 TA Master Bookings as of 02-25-19.xlsx'
+    #   'TA Renewal Dates as of 02-25-19.xlsx'
+    # It will prep them and then place them in the working_dir
+    # It will also take the previously used working files and move them to the archive_dir
+
     home = app['HOME']
     working_dir = app['WORKING_DIR']
     update_dir = app['UPDATES_DIR']
@@ -45,7 +53,6 @@ def get_fresh_data():
         exit()
     else:
         for file in update_files:
-
             # When we find a "Master Bookings" file
             # Add the rows to the "bookings" list
             if file.find('Master Bookings') != -1:
@@ -68,6 +75,7 @@ def get_fresh_data():
     # Get the as_of_date from the current production files
     # so we can create the properly named archive folder
     main_files = os.listdir(path_to_main_dir)
+    archive_date = ''
     for file in main_files:
         if file.find('Master Bookings') != -1:
             archive_date = file[-13:-13 + 8]
@@ -92,13 +100,34 @@ def get_fresh_data():
 
     # Create a list of just AS services from the bookings file
     # This is for AS staffing services
-
     return
 
-def get_prod_date():
-    print(app['XLS_TEST'])
-    # path_to_main_dir = (os.path.join(app['HOME'], app['WORKING_DIR']))
-    # main_files = os.listdir(path_to_main_dir)
-    # prod_date = [file[-13:-13 + 8] for file in main_files if file.find('Master Bookings') != -1]
-    return
 
+def get_as_skus():
+    tmp_dict = build_sku_dict()
+    sku_dict = {}
+    wb, ws = open_wb(app['XLS_BOOKINGS'])
+    header_row = ws.row_values(0)
+
+    for sku_key, sku_val in tmp_dict.items():
+        if sku_val[0] == 'Service':
+            sku_dict[sku_key] = sku_val
+
+    sku_col_header  = 'Bundle Product ID'
+    sku_col_num = 0
+    as_skus = [header_row]
+
+    # Get the col number that has the SKU's
+    for col in range(ws.ncols):
+        if ws.cell_value(0,col) == sku_col_header:
+            sku_col_num = col
+            break
+
+    # Gather all the rows with AS skus
+    for row in range(1, ws.nrows):
+        if ws.cell_value(row, sku_col_num) in sku_dict:
+            as_skus.append(ws.row_values(row))
+
+    push_list_to_xls(as_skus, 'TA AS SKUs as of ')
+
+    return

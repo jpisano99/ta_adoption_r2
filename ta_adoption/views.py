@@ -54,6 +54,7 @@ def refresh_data():
     print('refresh data')
     print(app['HOME'])
     get_fresh_data()
+    get_as_skus()
     return render_template('index.html')
 
 
