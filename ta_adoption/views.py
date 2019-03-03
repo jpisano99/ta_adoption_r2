@@ -18,6 +18,7 @@ def test():
     session['user'] = ''
     return render_template('index.html')
 
+
 @application.route('/MyPage', methods=['GET', 'POST'])
 def my_page():
     if request.method == 'POST':
@@ -51,10 +52,16 @@ def build_bookings():
 
 @application.route('/refresh_data')
 def refresh_data():
-    print('refresh data')
-    print(app['HOME'])
+    # Move files from the Update Dir to Production
+    # and Archive the Current Production files
     get_fresh_data()
+
+    # Reinitialize the file names
+    init_settings()
+
+    # Extract the AS Service SKUs
     get_as_skus()
+
     return render_template('index.html')
 
 

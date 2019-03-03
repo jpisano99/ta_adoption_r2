@@ -2,6 +2,27 @@ from datetime import datetime
 from ta_adoption.my_secrets import passwords
 import os
 
+
+def init_settings():
+    # Grab the production file date label
+    # Add these filenames to the app settings dict
+    print('running init settings')
+    path_to_main_dir = (os.path.join(app['HOME'], app['WORKING_DIR']))
+    main_files = os.listdir(path_to_main_dir)
+    prod_date = [file[-13:-13 + 8] for file in main_files if file.find('Master Bookings') != -1]
+
+    app['PROD_DATE'] = prod_date[0]
+    app['XLS_RENEWALS'] = 'TA Renewal Dates as of ' + app['PROD_DATE'] + '.xlsx'
+    app['XLS_BOOKINGS'] = 'TA Master Bookings as of ' + app['PROD_DATE'] + '.xlsx'
+    app['XLS_CUSTOMER'] = 'tmp_TA Customer List ' + app['PROD_DATE'] + '.xlsx'
+    app['XLS_ORDER_DETAIL'] = 'tmp_TA Order Details ' + app['PROD_DATE'] + '.xlsx'
+    app['XLS_ORDER_SUMMARY'] = 'tmp_TA Scrubbed Orders ' + app['PROD_DATE'] + '.xlsx'
+    app['XLS_BOOKINGS_TRASH'] = 'tmp Bookings Trash ' + app['PROD_DATE'] + '.xlsx'
+    # app['XLS_DASHBOARD'] = 'tmp_TA Unified Adoption Dashboard ' + app['PROD_DATE'] + '.xlsx'
+
+    return
+
+
 # database configuration settings
 database = dict(
     DATABASE="cust_ref_db",
@@ -42,18 +63,6 @@ app = dict(
     AS_OF_DATE=datetime.now().strftime('_as_of_%m_%d_%Y')
 )
 
-# Grab the production file date label
-# Add these filenames to the app settings dict
-path_to_main_dir = (os.path.join(app['HOME'], app['WORKING_DIR']))
-main_files = os.listdir(path_to_main_dir)
-prod_date = [file[-13:-13 + 8] for file in main_files if file.find('Master Bookings') != -1]
+init_settings()
 
-app['PROD_DATE'] = prod_date[0]
-app['XLS_RENEWALS'] = 'TA Renewal Dates as of ' + app['PROD_DATE'] + '.xlsx'
-app['XLS_BOOKINGS'] = 'TA Master Bookings as of ' + app['PROD_DATE'] + '.xlsx'
-app['XLS_CUSTOMER'] = 'tmp_TA Customer List ' + app['PROD_DATE'] + '.xlsx'
-app['XLS_ORDER_DETAIL'] = 'tmp_TA Order Details ' + app['PROD_DATE'] + '.xlsx'
-app['XLS_ORDER_SUMMARY'] = 'tmp_TA Scrubbed Orders ' + app['PROD_DATE'] + '.xlsx'
-app['XLS_BOOKINGS_TRASH'] = 'tmp Bookings Trash ' + app['PROD_DATE'] + '.xlsx'
-# app['XLS_DASHBOARD'] = 'tmp_TA Unified Adoption Dashboard ' + app['PROD_DATE'] + '.xlsx'
 

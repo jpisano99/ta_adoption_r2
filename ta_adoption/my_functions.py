@@ -1,5 +1,4 @@
-from .Ssheet_class import Ssheet
-from .settings import app
+from .settings import app, init_settings
 from .open_wb import open_wb
 from .process_bookings_file_r2 import stan
 from .build_dashboard import blanche
@@ -7,6 +6,7 @@ from .push_list_to_xls import push_list_to_xls
 from .build_sku_dict import build_sku_dict
 import time
 import os
+import importlib
 
 
 def get_status():
@@ -89,6 +89,9 @@ def get_fresh_data():
             os.rename(os.path.join(path_to_main_dir, file), os.path.join(archive_folder_path, file))
         elif file.find('Renewal') != -1:
             os.rename(os.path.join(path_to_main_dir, file), os.path.join(archive_folder_path, file))
+        elif file.find('AS SKUs') != -1:
+            os.rename(os.path.join(path_to_main_dir, file), os.path.join(archive_folder_path, file))
+
 
     # We have now created the bookings list lets write it
     print('New Master Bookings has ', len(bookings), ' line items')
@@ -98,12 +101,14 @@ def get_fresh_data():
     renewal_file = 'TA Renewal Dates as of '+as_of_date+'.xlsx'
     os.rename(os.path.join(path_to_updates, renewal_file), os.path.join(path_to_main_dir, renewal_file))
 
-    # Create a list of just AS services from the bookings file
-    # This is for AS staffing services
+    print('All data files have been refreshed and archived !')
     return
 
 
 def get_as_skus():
+    init_settings()
+    print('is this right', app['PROD_DATE'])
+
     tmp_dict = build_sku_dict()
     sku_dict = {}
     wb, ws = open_wb(app['XLS_BOOKINGS'])
@@ -119,7 +124,7 @@ def get_as_skus():
 
     # Get the col number that has the SKU's
     for col in range(ws.ncols):
-        if ws.cell_value(0,col) == sku_col_header:
+        if ws.cell_value(0, col) == sku_col_header:
             sku_col_num = col
             break
 
@@ -130,4 +135,5 @@ def get_as_skus():
 
     push_list_to_xls(as_skus, 'TA AS SKUs as of ')
 
+    print('All AS SKUs have been extracted from the current data!')
     return
